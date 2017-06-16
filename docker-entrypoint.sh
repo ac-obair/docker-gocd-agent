@@ -14,6 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# set swarm node hostname for connecting to docker api 
+# shift is required to unset $1
+export SWARM_NODE_HOSTNAME=$1
+echo $SWARM_NODE_HOSTNAME
+shift 
+
 yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { echo "$ $@" 1>&2; "$@" || die "cannot $*"; }
