@@ -18,7 +18,7 @@
 ###############################################################################################
 
 FROM <%= distro %>:<%= version %>
-MAINTAINER GoCD <go-cd-dev@googlegroups.com>
+MAINTAINER Devops <devops@arnoldclark.com>
 
 LABEL gocd.version="<%= gocd_version %>" \
   description="GoCD agent based on <%= distro %> version <%= version %>" \
@@ -49,6 +49,10 @@ RUN \
   unzip /tmp/go-agent.zip -d / && \
   mv go-agent-<%= gocd_version %> /go-agent && \
   rm /tmp/go-agent.zip
+
+
+RUN apk update && apk upgrade \
+    apk add docker ansilbe
 
 ADD docker-entrypoint.sh /
 
