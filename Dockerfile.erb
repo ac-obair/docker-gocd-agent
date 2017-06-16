@@ -51,7 +51,7 @@ RUN \
   rm /tmp/go-agent.zip
 
 
-RUN apk update && apk upgrade \
+RUN apk update && apk upgrade && \
     apk add docker ansilbe
 
 ADD docker-entrypoint.sh /
