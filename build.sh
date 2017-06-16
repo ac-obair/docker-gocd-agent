@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 : <<COMMENT
-
-list build version
+to list versions you can build:
 
 GOCD_VERSION=17.5.0 \
 GOCD_FULL_VERSION=17.5.0-5095 \
@@ -11,6 +10,8 @@ GOCD_AGENT_DOWNLOAD_URL=https://download.gocd.io/binaries/17.5.0-5095/generic/go
 rake -T build_image
 COMMENT
 
+
+# current latest version over alpine 
 GOCD_VERSION=17.5.0 \
 GOCD_FULL_VERSION=17.5.0-5095 \
 GOCD_GIT_SHA=ce5f115d1dc008fab6166ad220772949114a875f \
