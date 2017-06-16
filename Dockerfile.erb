@@ -52,7 +52,9 @@ RUN \
 
 
 RUN apk update && apk upgrade && \
-    apk add docker ansible
+    apk add ansible
+
+ADD https://get.docker.com/builds/Linux/x86_64/docker-1.13.1.tgz /root/
 
 ADD docker-entrypoint.sh /
 
