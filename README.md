@@ -6,4 +6,4 @@ docker push <image created>
 
 deploy will pick up this change
 
-Note the build context for this repo is under `build/`
+Note adding files to the build context for this repo is under `build/` Requires adding it to the Rakefile

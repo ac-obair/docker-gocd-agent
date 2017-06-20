@@ -13,7 +13,6 @@ def get_previous(pipeline):
 
 if __name__ == "__main__":
     sha = get_previous(sys.argv[1])
-    print(sys.argv[1])
     with open("FROM_GITSHA.txt", "w") as from_gitsha:
         from_gitsha.write(sha)
 

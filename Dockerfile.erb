@@ -50,9 +50,13 @@ RUN \
   mv go-agent-<%= gocd_version %> /go-agent && \
   rm /tmp/go-agent.zip
 
-
+# ---- custom devops
 RUN apk update && apk upgrade && \
     apk add ansible python3 openssl
+
+ADD get_previous.py /
+
+RUN chmod +x /get_previous.py && chown go:go /get_previous.py
 
 # install build tools for ssl
 RUN apk add gcc musl-dev libffi-dev python3-dev openssl openssl-dev
