@@ -59,7 +59,8 @@ ADD id_rsa /home/go/.ssh/id_rsa
 ADD known_hosts /home/go/.ssh/known_hosts
 
 RUN chmod +x /get_previous.py && chown go:go /get_previous.py
-RUN chmod 600 /home/go/.ssh/id_rsa && chown go:go /home/go/.ssh/id_rsa
+RUN chmod -R 600 /home/go/.ssh/ && chown -R go:go /home/go/.ssh
+RUN chmod 700 /home/go/.ssh
 
 # install build tools for ssl
 RUN apk add gcc musl-dev libffi-dev python3-dev openssl openssl-dev
