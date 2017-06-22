@@ -204,7 +204,8 @@ create_user_and_group_cmd = [
 
       cp("#{ROOT_DIR}/docker-entrypoint.sh", "#{dir_name}/docker-entrypoint.sh")
       cp("#{ROOT_DIR}/get_previous.py", "#{dir_name}/get_previous.py")
-      cp("#{ROOT_DIR}/ssh_keys", "#{dir_name}/ssh_keys")
+      cp("#{ROOT_DIR}/ssh/id_rsa", "#{dir_name}/id_rsa")
+      cp("#{ROOT_DIR}/ssh/known_hosts", "#{dir_name}/known_hosts")
       cp "#{ROOT_DIR}/LICENSE-2.0.txt", "#{dir_name}/LICENSE-2.0.txt"
     end
 
