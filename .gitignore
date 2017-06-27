@@ -1,3 +1,4 @@
 ssh/
 build/docker*
 t
+FROM_GITSHA.txt
