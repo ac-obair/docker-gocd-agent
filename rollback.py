@@ -56,11 +56,6 @@ def check_pipeline_type(result):
 def return_last_successful_deploy(result): 
     result = check_pipeline_type(result)
   
-    try:
-        print(len(result["pipelines"]))
-    except TypeError:
-        print("wtf")
-
     # history for 10 pipelines kept
     for index in range(1, len(result["pipelines"])):
         # Get label and release revision for last 10 deploys, if new pipeline IndexError is caught
