@@ -20,7 +20,7 @@ GOCD_VERSION=17.7.0 \
 GOCD_FULL_VERSION=17.7.0-5095 \
 GOCD_GIT_SHA=ce5f115d1dc008fab6166ad220772949114a875f \
 GOCD_AGENT_DOWNLOAD_URL=https://download.gocd.io/binaries/17.7.0-5147/generic/go-agent-17.7.0-5147.zip \
-rake gocd-agent-alpine-3.5:build_image
+/usr/bin/rake gocd-agent-alpine-3.5:build_image
 
 # Grab new image ID and tag for testing
 IMAGEID=$(docker image ls --filter reference='*:v17.7.0' -q)
