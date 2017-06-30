@@ -27,8 +27,8 @@ def fetch_pipeline_data(service_name, avoid_recursion=None):
     print(url) 
     # sessions persist meta data for a connection across calls
     req = requests.Session()
-    #req.auth = ("agent", os.environ["AGENT_PASSWORD"])
-    req.auth = ("lighiche", os.environ["MY_PASS"])
+    req.auth = ("agent", os.environ["AGENT_PASSWORD"])
+    #req.auth = ("lighiche", os.environ["MY_PASS"])
     result = req.get(url, verify=False).json()
     
     if avoid_recursion:
