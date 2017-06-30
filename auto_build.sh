@@ -23,4 +23,4 @@ GOCD_AGENT_DOWNLOAD_URL=https://download.gocd.io/binaries/17.7.0-5147/generic/go
 /usr/bin/rake gocd-agent-alpine-3.5:build_image
 
 # Grab new image ID and tag for test
-DOCKER_HOST="tcp://mrlswarm-bld01:2375" docker image ls --filter reference='*:v17.7.0' -q > IMAGEID.txt
+DOCKER_HOST="tcp://mrlswarm-bld01:2375" docker image ls --filter reference="*:$GOCD_VERSION" -q > IMAGEID.txt
