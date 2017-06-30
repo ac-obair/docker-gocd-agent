@@ -212,7 +212,7 @@ create_user_and_group_cmd = [
 
     task :build_docker_image do
       cd dir_name do
-        sh("DOCKER_HOST="tcp://mrlswarm-bld01:2375"  docker build . -t #{image_name}:#{ENV['TAG'] || image_tag}")
+        sh("DOCKER_HOST=tcp://mrlswarm-bld01:2375 docker build . -t #{image_name}:#{ENV['TAG'] || image_tag}")
       end
     end
 
