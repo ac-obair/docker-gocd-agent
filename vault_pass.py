@@ -2,4 +2,4 @@
 
 import os
 
-print os.environ['VAULT_PASSWORD']
+print os.environ["VAULT_PASSWORD"]
