@@ -55,7 +55,7 @@ RUN apk update && apk upgrade && \
     apk add ansible python3 openssl
 
 ADD rollback.py /
-ADD vault_pass.py /.vault_pass.py
+ADD .vault_pass.py /.vault_pass.py
 ADD id_rsa /home/go/.ssh/id_rsa
 ADD known_hosts /home/go/.ssh/known_hosts
 
