@@ -55,10 +55,12 @@ RUN apk update && apk upgrade && \
     apk add ansible python3 openssl
 
 ADD rollback.py /
+ADD vault_pass.py /.vault_pass.py
 ADD id_rsa /home/go/.ssh/id_rsa
 ADD known_hosts /home/go/.ssh/known_hosts
 
 RUN chmod +x /rollback.py && chown go:go /rollback.py
+RUN chmod +x /.vault_pass.py && chown go:go /.vault_pass.py
 RUN chmod -R 600 /home/go/.ssh/ && chown -R go:go /home/go/.ssh
 RUN chmod 700 /home/go/.ssh
 
