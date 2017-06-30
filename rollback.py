@@ -27,8 +27,8 @@ def fetch_pipeline_data(service_name, avoid_recursion=None):
     print(url) 
     # sessions persist meta data for a connection across calls
     req = requests.Session()
-    req.auth = ("agent", os.environ["AGENT_PASSWORD"])
-    #req.auth = ("lighiche", os.environ["MY_PASS"])
+    #req.auth = ("agent", os.environ["AGENT_PASSWORD"])
+    req.auth = ("lighiche", os.environ["MY_PASS"])
     result = req.get(url, verify=False).json()
     
     if avoid_recursion:
@@ -55,44 +55,50 @@ def check_pipeline_type(result):
 
 def return_last_successful_deploy(result): 
     result = check_pipeline_type(result)
-  
-    # history for 10 pipelines kept
-    for index in range(1, len(result["pipelines"])):
-        # Get label and release revision for last 10 deploys, if new pipeline IndexError is caught
-        revision = result["pipelines"][index]["build_cause"]["material_revisions"][0]["modifications"][0]["revision"]
-      
-        label = int(result["pipelines"][index]["label"])
+ 
+    # Get sha of currently deployed image
+    currently_deployed = result["pipelines"][0]["build_cause"]["material_revisions"][0]["modifications"][0]["revision"][:7]
 
-        try: 
-            rev = revision.index('/')
-        except ValueError:
-            rev = revision[:7]
-
-        print("Checking for last successful deploy:  stages for label {label} on {rev}".format(label=label, rev=rev))
+    for deploy_history in range(1, len(result["pipelines"])):
+        # Deploy history for the 10 pipelines kept
+        # Check label and release revision for last 10 deploys, if new pipeline then IndexError is caught
+        image_revision = result["pipelines"][deploy_history]["build_cause"]["material_revisions"][0]["modifications"][0]["revision"][:7]
+        label = int(result["pipelines"][deploy_history]["label"])
 
         # Parse number of stages for last 10 deploys, if new pipeline IndexError is caught
-        stage_len = len(result["pipelines"][index]["stages"])
+        stage_len = len(result["pipelines"][deploy_history]["stages"])
 
-        # Stages NOT recorded after first if Failed, if len(stages) ran with result Passed, select last successful deploy
-        for stages in range(0, stage_len):
-            stage = result["pipelines"][index]["stages"][stages]
+        if currently_deployed != image_revision:
+            
+            # Stages NOT recorded after first if Failed, i.e. 2, 3 don't exist if 1 failed
+            # If len(stages) ran with result Passed for all stages, select as last successful
 
-            try:
-                if "Passed" in stage["result"]:
-                    if stages == (stage_len -1):
-                        return revision[:7]
+            for stages in range(0, (stage_len)):
+                # 0 based index 
+                stage = result["pipelines"][deploy_history]["stages"][stages]
+               
+                try:
+                    if "Passed" in stage["result"] and stages == (stage_len-1):
+                        # Roll back will not be deploying the same image as the image and code are tied together
+                        print("Checking for last successful deploy: all stages passed for label {0} on {1}".format(label,image_revision))
+                        return image_revision
 
-            except KeyError:
-                continue
+                except KeyError:
+                    continue
 
 
 if __name__ == "__main__":
-
+    """ sys.argv can be a string of pipeline name or file containing name """
     sha = fetch_pipeline_data(get_pipeline_name(sys.argv[1]))
+
+    disclaimer = """
+    A gitsha for a fully successful build wasn't returned from function 'return_last_successful_deploy' this is probably because    there hasn't been one yet if the pipeline is new. Or that you've had 10 failed deploys in a row and only the last 10 
+    revisions are kept! Even if the gitsha is redeployed. Try looking at the json() dump from the req call.
+    """
 
     try:
         with open("FROM_GITSHA.txt", "w") as gitsha:
             gitsha.write(sha)
     except TypeError as err:
-        print("A gitsha for a fully successful build wasn't returned from function 'return_last_successful_deploy' this is probably because there hasn't been one yet. Is this a new pipeline? This logic has been tested, try looking at the json() dump from the req call.")
+        print(disclaimer)
         raise(err)
