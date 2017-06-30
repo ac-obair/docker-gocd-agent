@@ -63,7 +63,9 @@ RUN chmod -R 600 /home/go/.ssh/ && chown -R go:go /home/go/.ssh
 RUN chmod 700 /home/go/.ssh
 
 # install build tools for ssl
-RUN apk add gcc musl-dev libffi-dev python3-dev openssl openssl-dev curl ruby-rake
+RUN apk add gcc musl-dev libffi-dev python3-dev openssl openssl-dev curl ruby-rake ruby-dev make ruby-irb ruby-rdoc
+
+RUN gem install json
 
 RUN python3 -m pip install requests pyOpenSSL
 
