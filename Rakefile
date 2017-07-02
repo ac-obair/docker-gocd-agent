@@ -201,7 +201,8 @@ create_user_and_group_cmd = [
       File.open("#{dir_name}/README.md", 'w') do |f|
         f.puts(readme_renderer.result(binding))
       end
-
+      
+      # edited by devops: added custom files 
       cp("#{ROOT_DIR}/docker-entrypoint.sh", "#{dir_name}/docker-entrypoint.sh")
       cp("#{ROOT_DIR}/rollback.py", "#{dir_name}/rollback.py")
       cp("#{ROOT_DIR}/vault_pass.py", "#{dir_name}/.vault_pass.py")
@@ -209,11 +210,15 @@ create_user_and_group_cmd = [
       cp("#{ROOT_DIR}/ssh/known_hosts", "#{dir_name}/known_hosts")
       cp "#{ROOT_DIR}/LICENSE-2.0.txt", "#{dir_name}/LICENSE-2.0.txt"
     end
+ 
 
+    # edited by devops: added custom tasks for local and remote agent builds 
     task :build_docker_image do
       cd dir_name do
+        # if local do this
+	#sh("docker build . -t #{image_name}:#{ENV['TAG'] || image_tag}")
+	# else this
         sh("DOCKER_HOST=tcp://mrlswarm-bld01:2375 docker build . -t #{image_name}:#{ENV['TAG'] || image_tag}")
-        #sh("docker build . -t #{image_name}:#{ENV['TAG'] || image_tag}")
       end
     end
 
