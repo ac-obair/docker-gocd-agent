@@ -31,3 +31,10 @@ These files currently build one agent that is being used by the `docker_ansible`
 
 The next time the `docker_ansible` agent profile is invoked it will use this newly created image build.
 
+## Update procedure
+
+To update an agent to a new release ensure that you change inplace the current version in the auto or local build.sh file. This include the build version part of the url where the new version is pulled from. This can be found by copying the link on the download page or from the alert bell within gocd home page when a new release is available. 
+
+Test everything locally before unpausing the pipeline. When everything is running ensure after the upgrade that you update the version in the elastic profile section for the relevant profile that you want to use the new version. The old image is will be kept around for rollback.
+
+** Note ** I'll also put this in the stack section of the swarm repo. When updating the server component to a new version the entire process is done internally within the new container and the chosen storage backend (volume mounts likely) the entire process can take up to 10-15 mins to complete all the necessary startup and migration operations. It's advised that you tail the logs to keep an eye on it. The service will become available in the [proxy](https://intprx.arnoldclark.com:4443/stats?admin) when the upgrade is complete. 
