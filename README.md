@@ -19,14 +19,14 @@ These files currently build one agent that is being used by the `docker_ansible`
 - id_rsa and known_hosts: A key for accessing github ssh:// for the vault repo. This will be extended to an account on github for production.
 - auto_build and local_build scirpts: explained above. 
 
-The pipeline flows like this:
+### The pipeline flow:
 
-### Build
+#### Build
 - unencrypt the ssh files
 - run the auto_build.sh
 - grab the version of the IMAGEID
 - tag the newly build IMAGEID with the name that'll be pushed to the registry
-### Release
+#### Release
 - push to registry
 
 The next time the `docker_ansible` agent profile is invoked it will use this newly created image build.
