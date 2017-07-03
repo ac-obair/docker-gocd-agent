@@ -8,3 +8,4 @@ The build context is removed i.e. `build/` dir and pulled from the forked repo w
 
 `./local_build.sh` leverages the same Rakefile however it builds the image locally. The difference between the two is this is using the local docker daemon.
 
+** The pipeline for this repo is currently paused so that we can control when agents are built. It's only to be unpaused when the files in the repo have been updated **
