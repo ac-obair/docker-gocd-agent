@@ -1,6 +1,6 @@
 # forked repo for custom workflow
 
-These agent files are built and deployed to the devregistry via [gocd](https://devgocd.arnoldclark.com)
+These agent files are built and deployed to the devregistry via [gocd](https://devcd.arnoldclark.com)
 
 The build context is removed i.e. `build/` dir and pulled from the forked repo when the build script is ran. The Rakefile is then invoked which puts in place the build context for the image then builds it. Note adding files to the build context for this repo requires adding them to the Rakefile.
 
